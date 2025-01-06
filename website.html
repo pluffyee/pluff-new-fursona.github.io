@@ -38,20 +38,17 @@
       max-height: 100vh;
       object-fit: contain;
       z-index: -1;
+      transition: filter 0.3s ease;
     }
 
     .character {
       position: absolute;
-      transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;
+      transition: filter 0.3s ease, opacity 0.3s ease;
     }
 
     .character img {
       width: 100%;
       height: auto;
-    }
-
-    .character.expanded {
-      transform: scale(1.2); /* Slightly enlarge character on hover */
     }
 
     .description-box {
@@ -70,90 +67,90 @@
       opacity: 1;
     }
 
-    .container:hover .background-image {
+    .blurred {
+      filter: blur(5px);
+    }
+
+    .dimmed {
       opacity: 0.2;
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <div class="image-container">
-      <img src="PluffyEE_Refsheet.png" alt="Background" class="background-image" />
+  <div class="image-container">
+    <img src="PluffyEE_Refsheet.png" alt="Background" class="background-image" />
 
-      <!-- Character placeholders -->
-      <div class="character" id="character1">
-        <img src="1.png" alt="Character 1" />
-        <div class="description-box">
-          <table>
-            <thead>
-              <tr>
-                <th>Character 1</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Description for Character 1</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="character" id="character2">
-        <img src="2.png" alt="Character 2" />
-        <div class="description-box">
-          <table>
-            <thead>
-              <tr>
-                <th>Character 2</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Description for Character 2</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="character" id="character3">
-        <img src="3.png" alt="Character 3" />
-        <div class="description-box">
-          <table>
-            <thead>
-              <tr>
-                <th>Character 3</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Description for Character 3</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+    <!-- Character placeholders -->
+    <div class="character" id="character1">
+      <img src="1.png" alt="Character 1" />
+      <div class="description-box">
+        <table>
+          <thead>
+            <tr>
+              <th>Character 1</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Description for Character 1</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
-  </div>
 
-  <div class="character" id="character4">
-        <img src="4.png" alt="Character 4" />
-        <div class="description-box">
-          <table>
-            <thead>
-              <tr>
-                <th>Character 4</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Description for Character 4</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+    <div class="character" id="character2">
+      <img src="2.png" alt="Character 2" />
+      <div class="description-box">
+        <table>
+          <thead>
+            <tr>
+              <th>Character 2</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Description for Character 2</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="character" id="character3">
+      <img src="3.png" alt="Character 3" />
+      <div class="description-box">
+        <table>
+          <thead>
+            <tr>
+              <th>Character 3</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Description for Character 3</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="character" id="character4">
+      <img src="4.png" alt="Character 4" />
+      <div class="description-box">
+        <table>
+          <thead>
+            <tr>
+              <th>Character 4</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Description for Character 4</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -184,26 +181,53 @@
       },
       {
         id: 'character4',
-        x: 1000,
-        y: 295,
-        width: 392,
-        height: 455
+        x: 1105,
+        y: 127,
+        width: 283,
+        height: 295
       }
     ];
 
-    // Function to apply configurations
+    // Apply configurations to set position and size
     function setCharacterProperties(config) {
       const character = document.getElementById(config.id);
       if (character) {
-        // Position the character using transform
-        character.style.transform = `translate(${config.x}px, ${config.y}px)`;
-        // Set the size of the character
+        character.style.left = `${config.x}px`;
+        character.style.top = `${config.y}px`;
         character.style.width = `${config.width}px`;
         character.style.height = `${config.height}px`;
       }
     }
 
-    // Apply configurations to each character
+    // Get all characters and the background
+    const characters = document.querySelectorAll('.character');
+    const backgroundImage = document.querySelector('.background-image');
+
+    characters.forEach(character => {
+      character.addEventListener('mouseenter', () => {
+        // Blur background
+        backgroundImage.classList.add('blurred');
+
+        // Dim other characters
+        characters.forEach(otherCharacter => {
+          if (otherCharacter !== character) {
+            otherCharacter.classList.add('dimmed');
+          }
+        });
+      });
+
+      character.addEventListener('mouseleave', () => {
+        // Remove blur from background
+        backgroundImage.classList.remove('blurred');
+
+        // Remove dimming from all characters
+        characters.forEach(otherCharacter => {
+          otherCharacter.classList.remove('dimmed');
+        });
+      });
+    });
+
+    // Apply configurations to characters
     characterConfigs.forEach(setCharacterProperties);
   </script>
 
