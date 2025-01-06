@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Character Hover Effect</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+    }
+
+    .container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .image-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .background-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Ensures the image covers the whole screen */
+    }
+
+    .character {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      transition: all 0.3s ease;
+    }
+
+    .character.expanded {
+      width: 80px;
+      height: 80px;
+    }
+
+    .character img {
+      width: 10%;
+      height: 10%;
+    }
+
+    .description-box {
+      position: absolute;
+      top: 0;
+      left: 100%;
+      width: 200px;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 10px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .character:hover .description-box {
+      opacity: 1;
+    }
+
+    .container:hover .background-image {
+      opacity: 0.2;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="image-container">
+      <img src="PluffyEE_Refsheet.png" alt="Background" class="background-image" />
+      
+      <!-- Character 1 -->
+      <div class="character" id="character1" style="top: 100px; left: 50px;">
+        <img src="character-image.png" alt="Character 1" />
+        <div class="description-box">
+          <table>
+            <thead>
+              <tr>
+                <th>Character 1</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Description for Character 1</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Character 2 -->
+      <div class="character" id="character2" style="top: 100px; left: 200px;">
+        <img src="character-image.png" alt="Character 2" />
+        <div class="description-box">
+          <table>
+            <thead>
+              <tr>
+                <th>Character 2</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Description for Character 2</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Character 3 -->
+      <div class="character" id="character3" style="top: 250px; left: 50px;">
+        <img src="character-image.png" alt="Character 3" />
+        <div class="description-box">
+          <table>
+            <thead>
+              <tr>
+                <th>Character 3</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Description for Character 3</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Character 4 -->
+      <div class="character" id="character4" style="top: 250px; left: 200px;">
+        <img src="character-image.png" alt="Character 4" />
+        <div class="description-box">
+          <table>
+            <thead>
+              <tr>
+                <th>Character 4</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Description for Character 4</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Get all character elements
+    const characters = document.querySelectorAll('.character');
+
+    characters.forEach(character => {
+      character.addEventListener('mouseenter', () => {
+        character.classList.add('expanded');
+      });
+
+      character.addEventListener('mouseleave', () => {
+        character.classList.remove('expanded');
+      });
+    });
+  </script>
+
+</body>
+</html>
