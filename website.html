@@ -19,38 +19,39 @@
       position: relative;
       width: 100%;
       height: 100%;
+      overflow: hidden;
     }
 
     .image-container {
-      position: relative;
+      position: absolute;
       width: 100%;
       height: 100%;
     }
 
     .background-image {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover; /* Ensures the image covers the whole screen */
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100vw;
+      height: auto;
+      max-height: 100vh;
+      object-fit: contain;
+      z-index: -1;
     }
 
     .character {
       position: absolute;
-      width: 50px;
-      height: 50px;
-      transition: all 0.3s ease;
-    }
-
-    .character.expanded {
-      width: 80px;
-      height: 80px;
+      transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;
     }
 
     .character img {
-      width: 10%;
-      height: 10%;
+      width: 100%;
+      height: auto;
+    }
+
+    .character.expanded {
+      transform: scale(1.2); /* Slightly enlarge character on hover */
     }
 
     .description-box {
@@ -79,10 +80,10 @@
   <div class="container">
     <div class="image-container">
       <img src="PluffyEE_Refsheet.png" alt="Background" class="background-image" />
-      
-      <!-- Character 1 -->
-      <div class="character" id="character1" style="top: 100px; left: 50px;">
-        <img src="character-image.png" alt="Character 1" />
+
+      <!-- Character placeholders -->
+      <div class="character" id="character1">
+        <img src="1.png" alt="Character 1" />
         <div class="description-box">
           <table>
             <thead>
@@ -99,9 +100,8 @@
         </div>
       </div>
 
-      <!-- Character 2 -->
-      <div class="character" id="character2" style="top: 100px; left: 200px;">
-        <img src="character-image.png" alt="Character 2" />
+      <div class="character" id="character2">
+        <img src="2.png" alt="Character 2" />
         <div class="description-box">
           <table>
             <thead>
@@ -118,9 +118,8 @@
         </div>
       </div>
 
-      <!-- Character 3 -->
-      <div class="character" id="character3" style="top: 250px; left: 50px;">
-        <img src="character-image.png" alt="Character 3" />
+      <div class="character" id="character3">
+        <img src="3.png" alt="Character 3" />
         <div class="description-box">
           <table>
             <thead>
@@ -136,10 +135,11 @@
           </table>
         </div>
       </div>
+    </div>
+  </div>
 
-      <!-- Character 4 -->
-      <div class="character" id="character4" style="top: 250px; left: 200px;">
-        <img src="character-image.png" alt="Character 4" />
+  <div class="character" id="character4">
+        <img src="4.png" alt="Character 4" />
         <div class="description-box">
           <table>
             <thead>
@@ -159,18 +159,52 @@
   </div>
 
   <script>
-    // Get all character elements
-    const characters = document.querySelectorAll('.character');
+    // Configuration for character positions and sizes
+    const characterConfigs = [
+      {
+        id: 'character1',
+        x: 33,
+        y: 160,
+        width: 402,
+        height: 459
+      },
+      {
+        id: 'character2',
+        x: 433,
+        y: 150,
+        width: 432,
+        height: 459
+      },
+      {
+        id: 'character3',
+        x: 840,
+        y: 295,
+        width: 392,
+        height: 455
+      },
+      {
+        id: 'character4',
+        x: 1000,
+        y: 295,
+        width: 392,
+        height: 455
+      }
+    ];
 
-    characters.forEach(character => {
-      character.addEventListener('mouseenter', () => {
-        character.classList.add('expanded');
-      });
+    // Function to apply configurations
+    function setCharacterProperties(config) {
+      const character = document.getElementById(config.id);
+      if (character) {
+        // Position the character using transform
+        character.style.transform = `translate(${config.x}px, ${config.y}px)`;
+        // Set the size of the character
+        character.style.width = `${config.width}px`;
+        character.style.height = `${config.height}px`;
+      }
+    }
 
-      character.addEventListener('mouseleave', () => {
-        character.classList.remove('expanded');
-      });
-    });
+    // Apply configurations to each character
+    characterConfigs.forEach(setCharacterProperties);
   </script>
 
 </body>
